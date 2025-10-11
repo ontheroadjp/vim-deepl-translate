@@ -1,0 +1,12 @@
+# Vim swap files
+*.swp
+*.swo
+
+# Vim backup files
+*~
+
+# Tags files
+/tags
+
+# OS-generated files
+.DS_Store

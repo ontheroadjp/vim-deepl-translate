@@ -1,0 +1,18 @@
+*vim-gemini-translate.txt*    For Vim version 8.0 and later
+
+==============================================================================
+CONTENTS                                      *vim-gemini-translate-contents*
+
+  1. Introduction...........................*vim-gemini-translate-introduction*
+  2. Usage......................................*vim-gemini-translate-usage*
+
+==============================================================================
+INTRODUCTION                                *vim-gemini-translate-introduction*
+
+This plugin provides a function to translate selected text into English using the Gemini CLI.
+
+==============================================================================
+USAGE                                           *vim-gemini-translate-usage*
+
+In visual mode, select the text you want to translate and press `<leader>tr`.
+The selected text will be replaced with the English translation.

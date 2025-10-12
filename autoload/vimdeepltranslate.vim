@@ -1,4 +1,4 @@
-function! vimgeminitranslate#TranslateSelectionToEnglish()
+function! vimdeepltranslate#TranslateSelectionToEnglish()
   if visualmode() != 'V'
     echohl ErrorMsg
     echo "Error: Only line-wise visual selection (V) is supported."
@@ -31,14 +31,14 @@ function! vimgeminitranslate#TranslateSelectionToEnglish()
 endfunction
 
 function! s:TranslateWithDeepL(text)
-  if !exists('g:vimgeminitranslate_deepl_api_key')
+  if !exists('g:vimdeepltranslate_deepl_api_key')
     echohl ErrorMsg
-    echo "DeepL API key not set. Please set g:vimgeminitranslate_deepl_api_key in your vimrc."
+    echo "DeepL API key not set. Please set g:vimdeepltranslate_deepl_api_key in your vimrc."
     echohl None
     return ''
   endif
 
-  let l:api_key = g:vimgeminitranslate_deepl_api_key
+  let l:api_key = g:vimdeepltranslate_deepl_api_key
   let l:endpoint = "https://api-free.deepl.com/v2/translate"
   let l:curl_cmd = printf(
   \   'curl -s -X POST %s -H "Authorization: DeepL-Auth-Key %s" --data-urlencode %s --data-urlencode "target_lang=EN"',

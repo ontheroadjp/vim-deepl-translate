@@ -5,14 +5,41 @@ CONTENTS                                      *vim-gemini-translate-contents*
 
   1. Introduction...........................*vim-gemini-translate-introduction*
   2. Usage......................................*vim-gemini-translate-usage*
+  3. Configuration........................*vim-gemini-translate-configuration*
 
 ==============================================================================
 INTRODUCTION                                *vim-gemini-translate-introduction*
 
-This plugin provides a function to translate selected text into English using the Gemini CLI.
+This plugin provides a function to translate selected text into English using
+the Gemini CLI or DeepL API.
 
 ==============================================================================
 USAGE                                           *vim-gemini-translate-usage*
 
 In visual mode, select the text you want to translate and press `<leader>tr`.
 The selected text will be replaced with the English translation.
+
+To use a different mapping, you can map your preferred key to
+`<Plug>(vimgeminitranslate-translate)`.
+
+Example: >
+    xnoremap <leader>t <Plug>(vimgeminitranslate-translate)
+<
+==============================================================================
+CONFIGURATION                            *vim-gemini-translate-configuration*
+
+g:vimgeminitranslate_engine~
+  Specifies the translation engine to use.
+  - 'gemini' (default)
+  - 'deepl'
+
+  Example: >
+    let g:vimgeminitranslate_engine = 'deepl'
+<
+g:vimgeminitranslate_deepl_api_key~
+  Specifies your DeepL API key.
+  This is required if you set `g:vimgeminitranslate_engine` to 'deepl'.
+
+  Example: >
+    let g:vimgeminitranslate_deepl_api_key = 'YOUR_DEEPL_API_KEY'
+<

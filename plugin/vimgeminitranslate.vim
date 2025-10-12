@@ -1,8 +1,10 @@
-if exists('g:loaded_gemini_translate')
+if exists('g:loaded_vimgeminitranslate')
   finish
 endif
-let g:loaded_gemini_translate = 1
+let g:loaded_vimgeminitranslate = 1
 
-command! GeminiTranslate execute "call vimgeminitranslate#TranslateSelectionToEnglish()"
+xnoremap <silent> <Plug>(vimgeminitranslate-translate) :<C-u>call vimgeminitranslate#TranslateSelectionToEnglish()<CR>
 
-xnoremap <leader>tr :<C-u>GeminiTranslate<CR>
+if !hasmapto('<Plug>(vimgeminitranslate-translate)', 'x')
+  xnoremap <leader>tr <Plug>(vimgeminitranslate-translate)
+endif

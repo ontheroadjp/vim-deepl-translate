@@ -44,8 +44,7 @@ function! s:TranslateWithDeepL(text)
   \   'curl -s -X POST %s -H "Authorization: DeepL-Auth-Key %s" --data-urlencode %s --data-urlencode "target_lang=EN"',
   \   shellescape(l:endpoint),
   \   l:api_key,
-  \   'text=' . shellescape(a:text)
-  	)
+  \   'text=' . shellescape(a:text))
 
   let l:response = system(l:curl_cmd)
   let l:response_dict = json_decode(l:response)

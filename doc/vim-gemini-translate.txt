@@ -1,18 +1,36 @@
-*vim-gemini-translate.txt*    For Vim version 8.0 and later
+*vim-deepl-translate.txt*    For Vim version 8.0 and later
 
 ==============================================================================
-CONTENTS                                      *vim-gemini-translate-contents*
+CONTENTS                                      *vim-deepl-translate-contents*
 
-  1. Introduction...........................*vim-gemini-translate-introduction*
-  2. Usage......................................*vim-gemini-translate-usage*
-
-==============================================================================
-INTRODUCTION                                *vim-gemini-translate-introduction*
-
-This plugin provides a function to translate selected text into English using the Gemini CLI.
+  1. Introduction...........................*vim-deepl-translate-introduction*
+  2. Usage......................................*vim-deepl-translate-usage*
+  3. Configuration........................*vim-deepl-translate-configuration*
 
 ==============================================================================
-USAGE                                           *vim-gemini-translate-usage*
+INTRODUCTION                                *vim-deepl-translate-introduction*
 
-In visual mode, select the text you want to translate and press `<leader>tr`.
-The selected text will be replaced with the English translation.
+This plugin provides a function to translate selected text into English using
+the DeepL API.
+
+==============================================================================
+USAGE                                           *vim-deepl-translate-usage*
+
+In line-wise visual mode (V), select the text you want to translate and press
+`<leader>tr`. The selected text will be replaced with the English translation.
+
+To use a different mapping, you can map your preferred key to
+`<Plug>(vimgeminitranslate-translate)`.
+
+Example: >
+    xnoremap <leader>t <Plug>(vimgeminitranslate-translate)
+<
+==============================================================================
+CONFIGURATION                            *vim-deepl-translate-configuration*
+
+g:vimgeminitranslate_deepl_api_key~
+  Specifies your DeepL API key. This is required.
+
+  Example: >
+    let g:vimgeminitranslate_deepl_api_key = 'YOUR_DEEPL_API_KEY'
+<

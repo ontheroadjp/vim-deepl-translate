@@ -1,67 +1,51 @@
 function! vimgeminitranslate#TranslateSelectionToEnglish()
-  try
-    let l:engine = get(g:, 'vimgeminitranslate_engine', 'gemini')
+  if visualmode() != 'V'
+    echohl ErrorMsg
+    echo "Error: Only line-wise visual selection (V) is supported."
+    echohl None
+    return
+  endif
 
-    if l:engine ==# 'deepl'
-      if !exists('g:vimgeminitranslate_deepl_api_key')
-        echohl ErrorMsg
-        echo "DeepL API key not set. Please set g:vimgeminitranslate_deepl_api_key in your vimrc."
-        echohl None
-        return
-      endif
-    endif
+  let l:start_line = getpos("'<")[1]
+  let l:end_line = getpos("'>")[1]
 
-    let l:view = winsaveview()
-    let l:original_register = getreg('"')
-    let l:original_register_type = getregtype('"')
+  let l:text_lines = getline(l:start_line, l:end_line)
+  let l:text = join(l:text_lines, "\n")
 
-    normal! gvy
-    let l:text = @"
+  if empty(l:text)
+    return
+  endif
 
-    if empty(l:text)
-      return
-    endif
+  let l:translated = s:TranslateWithDeepL(l:text)
 
-    let l:translated = ''
-    if l:engine ==# 'gemini'
-      let l:translated = s:TranslateWithGemini(l:text)
-    elseif l:engine ==# 'deepl'
-      let l:translated = s:TranslateWithDeepL(l:text)
-    else
-      echohl ErrorMsg
-      echo "Invalid translation engine: " . l:engine
-      echohl None
-      return
-    endif
+  if empty(l:translated)
+    return
+  endif
 
-    if empty(l:translated)
-      return
-    endif
+  let l:translated_lines = split(l:translated, '\n')
+  
+  execute l:start_line . ',' . l:end_line . 'd'
+  call append(l:start_line - 1, l:translated_lines)
 
-    call setreg('"', l:translated)
-    normal! gvp
-  finally
-    call setreg('"', l:original_register, l:original_register_type)
-    call winrestview(l:view)
-  endtry
-  redraw!
-endfunction
-
-function! s:TranslateWithGemini(text)
-  let l:translated = system('echo '.shellescape(a:text).' | gemini --model gemini-2.5-flash "Translate the following Japanese text to English:" 2>/dev/null | grep -v "DeprecationWarning" | grep -v "Loaded cached credentials"')
-  return substitute(l:translated, "
-$", '', '')
+  redraw
 endfunction
 
 function! s:TranslateWithDeepL(text)
+  if !exists('g:vimgeminitranslate_deepl_api_key')
+    echohl ErrorMsg
+    echo "DeepL API key not set. Please set g:vimgeminitranslate_deepl_api_key in your vimrc."
+    echohl None
+    return ''
+  endif
+
   let l:api_key = g:vimgeminitranslate_deepl_api_key
   let l:endpoint = "https://api-free.deepl.com/v2/translate"
   let l:curl_cmd = printf(
   \   'curl -s -X POST %s -H "Authorization: DeepL-Auth-Key %s" --data-urlencode %s --data-urlencode "target_lang=EN"',
   \   shellescape(l:endpoint),
-  \   shellescape(l:api_key),
+  \   l:api_key,
   \   'text=' . shellescape(a:text)
-  \)
+  	)
 
   let l:response = system(l:curl_cmd)
   let l:response_dict = json_decode(l:response)
@@ -74,6 +58,5 @@ function! s:TranslateWithDeepL(text)
   endif
 
   let l:translated = l:response_dict['translations'][0]['text']
-  return substitute(l:translated, "
-$", '', '')
+  return substitute(l:translated, nr2char(10).'$', '', '')
 endfunction

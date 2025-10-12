@@ -18,7 +18,7 @@ Use your favorite plugin manager.
 For example, with [vim-plug](https://github.com/junegunn/vim-plug):
 
 ```vim
-Plug 'ontheroadjp/vim-gemini-translate'
+Plug 'ontheroadjp/vim-deepl-translate'
 ```
 
 ## Usage
@@ -36,7 +36,7 @@ You need to set your DeepL API key in your `.vimrc`.
 
 ```vim
 " Set your DeepL API key
-let g:vimgeminitranslate_deepl_api_key = 'YOUR_DEEPL_API_KEY'
+let g:vimdeepltranslate_deepl_api_key = 'YOUR_DEEPL_API_KEY'
 ```
 
 ### Key Mapping
@@ -45,7 +45,7 @@ The default mapping is `<leader>tr`. You can change it in your `.vimrc`.
 
 ```vim
 " Example: Map to <leader>t
-xnoremap <leader>t <Plug>(vimgeminitranslate-translate)
+xnoremap <leader>t <Plug>(vimdeepltranslate-translate)
 ```
 
 ## License

@@ -20,17 +20,17 @@ In line-wise visual mode (V), select the text you want to translate and press
 `<leader>tr`. The selected text will be replaced with the English translation.
 
 To use a different mapping, you can map your preferred key to
-`<Plug>(vimgeminitranslate-translate)`.
+`<Plug>(vimdeepltranslate-translate)`.
 
 Example: >
-    xnoremap <leader>t <Plug>(vimgeminitranslate-translate)
+    xnoremap <leader>t <Plug>(vimdeepltranslate-translate)
 <
 ==============================================================================
 CONFIGURATION                            *vim-deepl-translate-configuration*
 
-g:vimgeminitranslate_deepl_api_key~
+g:vimdeepltranslate_deepl_api_key~
   Specifies your DeepL API key. This is required.
 
   Example: >
-    let g:vimgeminitranslate_deepl_api_key = 'YOUR_DEEPL_API_KEY'
+    let g:vimdeepltranslate_deepl_api_key = 'YOUR_DEEPL_API_KEY'
 <

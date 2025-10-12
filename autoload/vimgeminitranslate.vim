@@ -49,8 +49,8 @@ endfunction
 
 function! s:TranslateWithGemini(text)
   let l:translated = system('echo '.shellescape(a:text).' | gemini --model gemini-2.5-flash "Translate the following Japanese text to English:" 2>/dev/null | grep -v "DeprecationWarning" | grep -v "Loaded cached credentials"')
-  return substitute(l:translated, '
-$', '', '')
+  return substitute(l:translated, "
+$", '', '')
 endfunction
 
 function! s:TranslateWithDeepL(text)
@@ -74,6 +74,6 @@ function! s:TranslateWithDeepL(text)
   endif
 
   let l:translated = l:response_dict['translations'][0]['text']
-  return substitute(l:translated, '
-$', '', '')
+  return substitute(l:translated, "
+$", '', '')
 endfunction

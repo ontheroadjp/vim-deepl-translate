@@ -1,4 +1,4 @@
-function! vimdeepltranslate#TranslateSelectionToEnglish()
+function! vimdeepltranslate#TranslateSelection(target_lang)
   if visualmode() != 'V'
     echohl ErrorMsg
     echo "Error: Only line-wise visual selection (V) is supported."
@@ -16,21 +16,21 @@ function! vimdeepltranslate#TranslateSelectionToEnglish()
     return
   endif
 
-  let l:translated = s:TranslateWithDeepL(l:text)
+  let l:translated = s:TranslateWithDeepL(l:text, a:target_lang)
 
   if empty(l:translated)
     return
   endif
 
   let l:translated_lines = split(l:translated, '\n')
-  
+
   execute l:start_line . ',' . l:end_line . 'd'
   call append(l:start_line - 1, l:translated_lines)
 
   redraw
 endfunction
 
-function! s:TranslateWithDeepL(text)
+function! s:TranslateWithDeepL(text, target_lang)
   if !exists('g:vimdeepltranslate_deepl_api_key')
     echohl ErrorMsg
     echo "DeepL API key not set. Please set g:vimdeepltranslate_deepl_api_key in your vimrc."
@@ -41,10 +41,11 @@ function! s:TranslateWithDeepL(text)
   let l:api_key = g:vimdeepltranslate_deepl_api_key
   let l:endpoint = "https://api-free.deepl.com/v2/translate"
   let l:curl_cmd = printf(
-  \   'curl -s -X POST %s -H "Authorization: DeepL-Auth-Key %s" --data-urlencode %s --data-urlencode "target_lang=EN"',
+  \   'curl -s -X POST %s -H "Authorization: DeepL-Auth-Key %s" --data-urlencode %s --data-urlencode "target_lang=%s"',
   \   shellescape(l:endpoint),
   \   l:api_key,
-  \   'text=' . shellescape(a:text))
+  \   'text=' . shellescape(a:text),
+  \   a:target_lang)
 
   let l:response = system(l:curl_cmd)
   let l:response_dict = json_decode(l:response)

@@ -10,20 +10,28 @@ CONTENTS                                      *vim-deepl-translate-contents*
 ==============================================================================
 INTRODUCTION                                *vim-deepl-translate-introduction*
 
-This plugin provides a function to translate selected text into English using
-the DeepL API.
+This plugin provides a function to translate selected text into multiple
+languages using the DeepL API.
 
 ==============================================================================
 USAGE                                           *vim-deepl-translate-usage*
 
 In line-wise visual mode (V), select the text you want to translate and press
-`<leader>tr`. The selected text will be replaced with the English translation.
+one of the following keys:
 
-To use a different mapping, you can map your preferred key to
-`<Plug>(vimdeepltranslate-translate)`.
+- `<leader>tr` or `<leader>en`: Translate to English.
+- `<leader>ja`: Translate to Japanese.
+- `<leader>zh`: Translate to Chinese.
+- `<leader>ko`: Translate to Korean.
+
+The selected text will be replaced with the translated text.
+
+To use a different mapping, you can map your preferred key to the <Plug>
+mappings.
 
 Example: >
-    xnoremap <leader>t <Plug>(vimdeepltranslate-translate)
+    " Map <leader>t to translate to English
+    xnoremap <leader>t <Plug>(vimdeepltranslate-en)
 <
 ==============================================================================
 CONFIGURATION                            *vim-deepl-translate-configuration*
